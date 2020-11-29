@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  mysql-db:
+    image: mysql:8.0.22
+    container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=smart-pot
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3307:3306
+    volumes:
+      - smart-pot-data:/var/lib/mysql
+
+  mqtt-broker:
+    container_name: mqtt-broker
+    image: eclipse-mosquitto
+    ports:
+      - 1884:1883
+
+  smart-pot-core:
+    image: rborulchenko/smart-pot-core:latest
+    container_name: smart-pot-core
+    ports:
+      - 8081:8080
+    environment:
+      MYSQL_URL: jdbc:mysql://mysql-db:3306/smart-pot
+      MQTT_PORT: 1883
+      MQTT_HOST: mqtt-broker
+    depends_on:
+      - mysql-db
+      - mqtt-broker
+
+  smart-pot-client:
+    image: rborulchenko/smart-pot-client:latest
+    ports:
+      - 4200:80
+    environment:
+      CLOUD_API_URL: http://0.0.0.0:8081/
+    depends_on:
+      - smart-pot-core
+
+volumes:
+  smart-pot-data:
