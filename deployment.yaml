@@ -1,56 +1,41 @@
-apiVersion: v1
-kind: Service
-metadata:
-  annotations:
-    kompose.cmd: kompose --file docker-compose.yml convert
-    kompose.version: 1.21.0 (992df58d8)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: mqtt-broker
-  name: mqtt-broker
-spec:
-  ports:
-    - name: "1884"
-      port: 1884
-      targetPort: 1883
-  selector:
-    io.kompose.service: mqtt-broker
-status:
-  loadBalancer: {}
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose --file docker-compose.yml convert
-    kompose.version: 1.21.0 (992df58d8)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: mqtt-broker
   name: mqtt-broker
+  labels:
+    app: broker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: mqtt-broker
-  strategy: {}
+      app: broker
+  strategy:
+    type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose --file docker-compose.yml convert
-        kompose.version: 1.21.0 (992df58d8)
-      creationTimestamp: null
       labels:
-        io.kompose.service: mqtt-broker
+        app: broker
     spec:
       containers:
-        - image: eclipse-mosquitto
-          imagePullPolicy: ""
-          name: mqtt-broker
+        - name: mqtt-broker
+          image: eclipse-mosquitto
           ports:
             - containerPort: 1883
-          resources: {}
       restartPolicy: Always
-      serviceAccountName: ""
       volumes: null
-status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mqtt-broker
+  labels:
+    app: broker
+spec:
+  ports:
+    - name: "mqtt"
+      port: 1884
+      targetPort: 1883
+      protocol: TCP
+  selector:
+    app: broker
+  type: NodePort
