@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mqtt-broker
+  name: mqtt-deployment
   labels:
-    app: broker
+    app: mqtt
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: broker
+      app: mqtt
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: broker
+        app: mqtt
     spec:
       containers:
         - name: mqtt-broker
@@ -27,9 +27,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mqtt-broker
+  name: mqtt-service
   labels:
-    app: broker
+    app: mqtt
 spec:
   ports:
     - name: "mqtt"
@@ -37,5 +37,5 @@ spec:
       targetPort: 1883
       protocol: TCP
   selector:
-    app: broker
+    app: mqtt
   type: NodePort
