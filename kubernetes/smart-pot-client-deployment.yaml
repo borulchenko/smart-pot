@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: smart-pot
+  name: smart-pot-client
+spec:
+  selector:
+    app: smart-pot
+    tier: frontend
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: smart-pot
+  name: smart-pot-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smart-pot
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: smart-pot
+        tier: frontend
+    spec:
+      containers:
+        - image: rborulchenko/smart-pot-client:latest
+          name: smart-pot-client
+          env:
+            - name: CLOUD_API_URL
+              value: http://192.168.99.100:31433/
+          ports:
+          - containerPort: 80
