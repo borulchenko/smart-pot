@@ -7,6 +7,7 @@ metadata:
 spec:
   ports:
   - port: 3306
+    nodePort: 33306
   selector:
     app: smart-pot
     tier: mysql
@@ -21,7 +22,6 @@ metadata:
   labels:
     app: smart-pot
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: smart-pot

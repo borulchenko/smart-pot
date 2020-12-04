@@ -7,6 +7,7 @@ metadata:
 spec:
   ports:
   - port: 1883
+    nodePort: 31883
   selector:
     app: smart-pot
     tier: broker
@@ -19,7 +20,6 @@ metadata:
   labels:
     app: smart-pot
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: smart-pot
