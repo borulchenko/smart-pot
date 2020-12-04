@@ -9,7 +9,7 @@ spec:
     - name: "4200"
       port: 4200
       targetPort: 80
-      nodePort: 34200
+      nodePort: 30200
   selector:
     app: smart-pot
     tier: frontend
@@ -37,10 +37,9 @@ spec:
     spec:
       containers:
         - image: rborulchenko/smart-pot-client:latest
-          imagePullPolicy: Never
           name: smart-pot-client
           env:
             - name: CLOUD_API_URL
-              value: http://192.168.99.100:38081/
+              value: http://192.168.99.100:30081/
           ports:
           - containerPort: 80
