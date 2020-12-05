@@ -1,6 +1,12 @@
 # Smart Pot Devops
 This repo holds all DEVOPS related scripts such as docker-compose.yml file and kubernetes deployments.
 
+## Smart Pot related projects: 
+
+* [SmartPotCore service][smart-pot-core-service]
+* [SmartPotClient service][smart-pot-client-service]
+* [SmartPotDevice][smart-pot-device]
+
 ## Kubernetes approach
 Allow you to deploy entire smart-pot infrastructure using kubernetes
 
@@ -51,3 +57,8 @@ Smart Pot Core
 
 Smart Pot Client
 * CLOUD_API_URL
+
+
+[smart-pot-core-service]: https://github.com/borulchenko/smart-pot-core
+[smart-pot-client-service]: https://github.com/borulchenko/smart-pot-client
+[smart-pot-device]: https://github.com/borulchenko/smart-pot-device
