@@ -1,36 +1,53 @@
-# Smart Pot
-This repo holds all DEVOPS related scripts such as docker-compose.yml file
+# Smart Pot Devops
+This repo holds all DEVOPS related scripts such as docker-compose.yml file and kubernetes deployments.
 
-## docker-compose.yml: 
-Run this command to deploy entire smart-pot project and dependencies on you machine. 
+## Kubernetes approach
+Allow you to deploy entire smart-pot infrastructure using kubernetes
+
+#### Dependencies
+Make sure docker and minikube cluster (eg: Minikube) is installed properly and running on your local machine.
+
+#### Deployment 
+ 
+You can run single command to deploy all the infrastructure in the k8s cluster, runing:
+```
+bash kubernetes/startup.sh 
+```
+
+If you are on Windows - you'll need to run all deployments/services manually, or write your own bash script to simplify the process.
+
+
+<br>
+<br>
+
+## Docker-compose approach
+
+Allow you to deploy entire smart-pot infrastructure using docker-compose.
+
+#### Dependencies 
+
+Make sure docker/docker-compose is installed properly on your machine.
+
+#### Deployment 
+ 
+Just run this command from the root path: 
 ```
 docker-compose up
 ```
 
-## Environment variables description:
+#### Env variables
 
-### mysql:
-ENV variables: 
+MySQL 
 * MYSQL_ROOT_PASSWORD
 * MYSQL_DATABASE
 * MYSQL_USER
 * MYSQL_PASSWORD
 
-### smart-pot-core:
-ENV variables: 
+Smart Pot Core 
 * MYSQL_URL
 * MQTT_PORT
 * MQTT_HOST
 * MYSQL_DATABASE
 
-depends on:
-* mqtt broker
-* mysql database
-
-
-### smart-pot-client:
-env variables: 
+Smart Pot Client
 * CLOUD_API_URL
-
-depends on:
-* smart-pot-core
