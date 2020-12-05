@@ -46,5 +46,15 @@ spec:
             value: "1883"
           - name: MYSQL_URL
             value: jdbc:mysql://smart-pot-mysql:3306/smart-pot
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: smart-pot-username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: smart-pot-password
         ports:
         - containerPort: 8080

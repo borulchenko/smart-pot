@@ -39,12 +39,21 @@ spec:
         env:
           - name: MYSQL_DATABASE
             value: smart-pot
-          - name: MYSQL_PASSWORD
-            value: password
           - name: MYSQL_ROOT_PASSWORD
-            value: root
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: root-password
           - name: MYSQL_USER
-            value: user
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: smart-pot-username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: smart-pot-password
         ports:
         - containerPort: 3306
           name: mysql
